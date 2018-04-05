@@ -7,17 +7,18 @@
 # Specify tone frequency with -f freg_in_hz  e.g. -f 60000
 # The default is 1000 which is an audible tone - just so we know the program runs.
 #
-# To be able to generate an ultrasound tone the output device should ideally support 
+# To be able to generate an ultrasound tone the output device should ideally support
 # a sample rate of 88200 or better.  Typical rates are 88200, 96000, and 192000.
-# Some sound cards are only capable of 44100 samples/second in which case the 
-# maximum output frequency will be 22kHz. This is above human hearing range so 
+# Some sound cards are only capable of 44100 samples/second in which case the
+# maximum output frequency will be 22kHz. This is above human hearing range so
 # can be used for some test purposes, but a high speed sound card can do much
-# better.  
+# better.
 #
-# Michael Saunby. June 2012 
+# Michael Saunby. June 2012
 
 from gnuradio import gr
 from gnuradio import audio
+from gnuradio import analog
 from gnuradio.eng_option import eng_option
 from optparse import OptionParser
 
@@ -37,12 +38,12 @@ class my_top_block(gr.top_block):
         (options, args) = parser.parse_args ()
         if len(args) != 0:
             parser.print_help()
-            raise SystemExit, 1
+            raise (SystemExit, 1)
 
         sample_rate = int(options.sample_rate)
         ampl = 0.8
 
-        src0 = gr.sig_source_f (sample_rate, gr.GR_SIN_WAVE, options.frequency, ampl)
+        src0 = analog.sig_source_f (sample_rate, analog.GR_SIN_WAVE, options.frequency, ampl)
         dst = audio.sink (sample_rate, options.audio_output, True)
         self.connect (src0, (dst, 0))
 

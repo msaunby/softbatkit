@@ -1,7 +1,11 @@
 #!/usr/bin/env python
-# 
+#
 
 from gnuradio import gr
+from gnuradio import analog
+from gnuradio import audio
+from gnuradio import blocks
+import time
 
 class my_top_block(gr.top_block):
 
@@ -14,15 +18,15 @@ class my_top_block(gr.top_block):
         ampl = 0.8
 
 
-        src0 = gr.sig_source_f (sample_rate, gr.GR_SIN_WAVE, frequency, ampl)
-        # use 'head' to stop block running after 10 seconds 
-        head = gr.head(gr.sizeof_float, sample_rate*10)
-        dst = gr.wavfile_sink ("sample_57k_sin.wav", 1, sample_rate)
-        self.connect (src0, head, dst)
-
+        src0 = analog.sig_source_f (sample_rate, analog.GR_SIN_WAVE, frequency, ampl)
+        dst = blocks.wavfile_sink ("sample_57k_sin.wav", 1, sample_rate)
+        self.connect (src0, dst)
 
 if __name__ == '__main__':
     try:
-        my_top_block().run()
+        tb =  my_top_block()
+        tb.start()
+        time.sleep(5.0)
+        tb.stop()
     except KeyboardInterrupt:
         pass
