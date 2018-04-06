@@ -27,7 +27,6 @@ class my_top_block(gr.top_block):
 
         sample_rate = int(options.sample_rate)
         src = audio.source (sample_rate, options.audio_input)
-        #dst = blocks.file_sink (gr.sizeof_float, filename)
         dst = blocks.wavfile_sink (filename, 1, sample_rate)
 
         if options.nsamples is None:
