@@ -33,14 +33,17 @@ class my_top_block(gr.top_block):
         if ampl > 1.0: ampl = 1.0
 
         to_real = blocks.complex_to_real()
+        to_imag = blocks.complex_to_imag()
 
         src = audio.source (sample_rate, options.audio_input)
         firdes_taps = filter.firdes.low_pass_2(1, 1, 0.2, 0.1, 60)
         converter = filter.freq_xlating_fir_filter_fcf ( 1, firdes_taps, 0 - options.frequency, sample_rate )
-        dst = audio.sink (44100, options.audio_output, True)
+        dst = audio.sink (sample_rate, options.audio_output, True)
 
-        self.connect(src, converter, to_real, dst)
-
+        #self.connect(src, converter, to_real, dst)
+        self.connect(src, converter)
+        self.connect(converter, to_real, (dst,0))
+        self.connect(converter, to_imag, (dst,1))
 if __name__ == '__main__':
     try:
         my_top_block().run()
