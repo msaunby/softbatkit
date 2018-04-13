@@ -37,7 +37,8 @@ class my_top_block(gr.top_block):
 
         src = audio.source (sample_rate, options.audio_input)
         firdes_taps = filter.firdes.low_pass_2(1, 1, 0.2, 0.1, 60)
-        converter = filter.freq_xlating_fir_filter_fcf ( 1, firdes_taps, 0 - options.frequency, sample_rate )
+        converter = filter.freq_xlating_fir_filter_fcf ( 1, firdes_taps, 0, sample_rate )
+        converter.set_center_freq(0 - options.frequency)
         dst = audio.sink (sample_rate, options.audio_output, True)
 
         #self.connect(src, converter, to_real, dst)
