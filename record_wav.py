@@ -22,7 +22,7 @@ class my_top_block(gr.top_block):
         (options, args) = parser.parse_args ()
         if len(args) != 1:
             parser.print_help()
-            raise SystemExit, 1
+            raise( SystemExit, 1 )
         filename = args[0]
 
         sample_rate = int(options.sample_rate)
