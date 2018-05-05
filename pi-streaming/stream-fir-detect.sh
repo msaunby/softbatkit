@@ -1,7 +1,7 @@
 #!/bin/sh
 Record_from_Linein_Micbias.sh
-python ../fir_bat_detect.py -O "hw:Loopback,1,0"
-ffmpeg -i "hw:Loopback,0,0" -b:a 512k -bufsize 2M -ar 8000 -f mulaw -f rtp rtp://192.168.0.22:1234
+python ../fir_bat_detect.py -O hw:Loopback,1,0 &
+ffmpeg -f alsa -i hw:Loopback,0,0 -b:a 512k -bufsize 2M -ar 8000 -f mulaw -f rtp rtp://192.168.0.22:1234
 
 #SDP:
 #v=0
