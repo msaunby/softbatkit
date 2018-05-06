@@ -1,7 +1,7 @@
 #!/bin/sh
 
 Record_from_DMIC_loud.sh
-arecord -f S16_LE -c2 -r44000 | ffmpeg -i -  -b:a 512k -bufsize 2M -ar 8000 -f mulaw -f rtp rtp://192.168.0.22:1234
+arecord -f S16_LE -c2 -r44000 | ffmpeg -i -  -b:a 512k -bufsize 2M -ar 44000 -f mulaw -f rtp rtp://192.168.0.22:1234
 
 #SDP:
 #v=0
